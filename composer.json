@@ -2,9 +2,10 @@
     "name": "souidev/mastercard-gateway",
     "description": "A Laravel package for Mastercard Gateway REST API integration.",
     "keywords": [
-        "souidev",
-        "laravel",
-        "mastercard-gateway"
+        "mastercard",
+        "payment",
+        "gateway",
+        "souidev"
     ],
     "homepage": "https://github.com/souidev/mastercard-gateway",
     "license": "MIT",

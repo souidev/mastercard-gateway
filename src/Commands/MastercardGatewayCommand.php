@@ -1,12 +1,12 @@
 <?php
 
-namespace VendorName\Skeleton\Commands;
+namespace Souidev\MastercardGateway\Commands;
 
 use Illuminate\Console\Command;
 
-class SkeletonCommand extends Command
+class MastercardGatewayCommand extends Command
 {
-    public $signature = 'skeleton';
+    public $signature = 'mastercard-gateway';
 
     public $description = 'My command';
 

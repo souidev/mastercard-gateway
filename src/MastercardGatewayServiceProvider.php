@@ -16,12 +16,18 @@ class MastercardGatewayServiceProvider extends PackageServiceProvider
 
     public function packageRegistered()
     {
-        $this->app->singleton('mastercard-gateway', function ($app) {
-            $config = $app['config']->get('mastercard-gateway');
+        $this->app->singleton(Merchant::class, function ($app) {
+            return new Merchant($app['config']->get('mastercard-gateway'));
+        });
 
+        $this->app->singleton(Connection::class, function ($app) {
+            return new Connection($app['config']->get('mastercard-gateway'));
+        });
+
+        $this->app->singleton('mastercard-gateway', function ($app) {
             return new MastercardGateway(
-                new Merchant($config),
-                new Connection($config),
+                $app->make(Merchant::class),
+                $app->make(Connection::class),
                 new Parser
             );
         });

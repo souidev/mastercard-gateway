@@ -2,13 +2,24 @@
 
 namespace Souidev\MastercardGateway\Tests\Integration;
 
+use PHPUnit\Framework\Attributes\Test;
 use Souidev\MastercardGateway\Connection;
 use Souidev\MastercardGateway\Facades\MastercardGateway;
 use Souidev\MastercardGateway\Tests\TestCase;
 
 class MastercardGatewayTest extends TestCase
 {
-    /** @test */
+    protected function setUp(): void
+    {
+        parent::setUp();
+
+        // Set the configuration values for the test
+        config()->set('mastercard-gateway.merchant_id', 'TESTMERCHANT');
+        config()->set('mastercard-gateway.api_username', 'merchant.TESTMERCHANT');
+        config()->set('mastercard-gateway.password', 'testpassword');
+    }
+
+    #[Test]
     public function it_can_perform_a_charge()
     {
         // Mock the Connection class

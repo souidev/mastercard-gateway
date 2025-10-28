@@ -9,6 +9,7 @@ use Souidev\MastercardGateway\Exceptions\MastercardConnectionException;
 class Connection
 {
     protected array $config;
+
     protected Client $client;
 
     public function __construct(array $config)
@@ -17,8 +18,8 @@ class Connection
         $this->client = new Client([
             'base_uri' => $this->config['gateway_url'],
             'auth' => [
-                'merchant.' . $this->config['merchant_id'],
-                $this->config['password']
+                'merchant.'.$this->config['merchant_id'],
+                $this->config['password'],
             ],
             'debug' => $this->config['debug'] ?? false,
             'proxy' => $this->config['proxy']['server'] ?? null,
@@ -30,9 +31,10 @@ class Connection
     {
         try {
             $response = $this->client->post($url, ['json' => $data]);
+
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
-            throw new MastercardConnectionException('Error connecting to Mastercard Gateway: ' . $e->getMessage(), $e->getCode(), $e);
+            throw new MastercardConnectionException('Error connecting to Mastercard Gateway: '.$e->getMessage(), $e->getCode(), $e);
         }
     }
 
@@ -40,9 +42,10 @@ class Connection
     {
         try {
             $response = $this->client->put($url, ['json' => $data]);
+
             return json_decode($response->getBody()->getContents(), true);
         } catch (RequestException $e) {
-            throw new MastercardConnectionException('Error connecting to Mastercard Gateway: ' . $e->getMessage(), $e->getCode(), $e);
+            throw new MastercardConnectionException('Error connecting to Mastercard Gateway: '.$e->getMessage(), $e->getCode(), $e);
         }
     }
 }

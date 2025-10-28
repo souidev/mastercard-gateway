@@ -7,7 +7,9 @@ use Souidev\MastercardGateway\DTOs\Response;
 class MastercardGateway
 {
     protected Merchant $merchant;
+
     protected Connection $connection;
+
     protected Parser $parser;
 
     public function __construct(Merchant $merchant, Connection $connection, Parser $parser)
@@ -21,7 +23,7 @@ class MastercardGateway
     {
         $apiRequest = $this->parser->formatRequest($data, $this->merchant);
 
-        $url = '/version/' . $this->merchant->getApiVersion() . '/merchant/' . $this->merchant->getMerchantId() . '/order/' . ($data['orderId'] ?? '') . '/transaction/' . ($data['transactionId'] ?? '');
+        $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.($data['orderId'] ?? '').'/transaction/'.($data['transactionId'] ?? '');
 
         $response = $this->connection->post(trim($url, '/'), $apiRequest);
 
@@ -32,7 +34,7 @@ class MastercardGateway
     {
         $apiRequest = $this->parser->formatRequest($data, $this->merchant);
 
-        $url = '/version/' . $this->merchant->getApiVersion() . '/merchant/' . $this->merchant->getMerchantId() . '/order/' . $orderId . '/transaction/' . $transactionId;
+        $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.$orderId.'/transaction/'.$transactionId;
 
         $response = $this->connection->put($url, $apiRequest);
 

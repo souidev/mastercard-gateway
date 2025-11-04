@@ -40,13 +40,27 @@ You can interact with the gateway using the `MastercardGateway` facade.
 ```php
 use Souidev\MastercardGateway\Facades\MastercardGateway;
 
-$response = MastercardGateway::charge([
+$response = MastercardGateway::pay([
     'orderId' => '12345',
-    'transaction' => [
+    'transactionId' => '1',
+    'order' => [
         'amount' => 100.00,
         'currency' => 'USD',
+        'description' => 'Goods and Services', // optional
     ],
-    // ... other transaction details
+    'sourceOfFunds' => [
+        'type' => 'CARD',
+        'provided' => [
+            'card' => [
+                'number' => '5123456789012346',
+                'expiry' => [
+                    'month' => '01',
+                    'year' => '39',
+                ],
+                'securityCode' => '123', // optional
+            ],
+        ],
+    ],
 ]);
 
 if ($response->isSuccessful()) {
@@ -57,21 +71,200 @@ if ($response->isSuccessful()) {
 }
 ```
 
-### Updating a Transaction
+### Authorizing a Payment
 
 ```php
 use Souidev\MastercardGateway\Facades\MastercardGateway;
 
-$response = MastercardGateway::updateTransaction('12345', 'TXN123', [
+$response = MastercardGateway::authorize([
+    'orderId' => '12345',
+    'transactionId' => '1',
+    'order' => [
+        'amount' => 100.00,
+        'currency' => 'USD',
+        'description' => 'Goods and Services', // optional
+    ],
+    'sourceOfFunds' => [
+        'type' => 'CARD',
+        'provided' => [
+            'card' => [
+                'number' => '5123456789012346',
+                'expiry' => [
+                    'month' => '01',
+                    'year' => '39',
+                ],
+                'securityCode' => '123', // optional
+            ],
+        ],
+    ],
+]);
+```
+
+### Capturing a Payment
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::capture('12345', 'TXN123', [
     'transaction' => [
-        'amount' => 150.00,
+        'amount' => 100.00,
         'currency' => 'USD',
     ],
 ]);
+```
 
-if ($response->isSuccessful()) {
-    // Handle successful update
-}
+### Refunding a Payment
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::refund('12345', 'TXN123', [
+    'transaction' => [
+        'amount' => 100.00,
+        'currency' => 'USD',
+    ],
+]);
+```
+
+### Voiding a Transaction
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::void('12345', 'TXN123', []);
+```
+
+### Verifying a Card
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::verify([
+    'orderId' => '12345',
+    'transactionId' => '1',
+    'order' => [
+        'currency' => 'USD',
+    ],
+    'sourceOfFunds' => [
+        'type' => 'CARD',
+        'provided' => [
+            'card' => [
+                'number' => '5123456789012346',
+                'expiry' => [
+                    'month' => '01',
+                    'year' => '39',
+                ],
+                'securityCode' => '123', // optional
+            ],
+        ],
+    ],
+]);
+```
+
+### Retrieving a Transaction
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::retrieveTransaction('12345', 'TXN123');
+```
+
+### Retrieving an Order
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::retrieveOrder('12345');
+```
+
+### Authenticating a Payer
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::authenticatePayer([
+    'orderId' => '12345',
+    'transactionId' => '1',
+    'order' => [
+        'currency' => 'USD',
+    ],
+    'sourceOfFunds' => [
+        'type' => 'CARD',
+        'provided' => [
+            'card' => [
+                'number' => '5123456789012346',
+                'expiry' => [
+                    'month' => '01',
+                    'year' => '39',
+                ],
+            ],
+        ],
+    ],
+    'device' => [ // optional
+        'browser' => 'Mozilla/5.0',
+        'ipAddress' => '127.0.0.1',
+    ],
+]);
+```
+
+### Tokenization
+
+#### Creating a Token
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::createToken([
+    'sourceOfFunds' => [
+        'type' => 'CARD',
+        'provided' => [
+            'card' => [
+                'number' => '5123456789012346',
+                'expiry' => [
+                    'month' => '01',
+                    'year' => '39',
+                ],
+            ],
+        ],
+    ],
+]);
+```
+
+#### Updating a Token
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::updateToken('TOKEN_ID', [
+    'sourceOfFunds' => [
+        'type' => 'CARD',
+        'provided' => [
+            'card' => [
+                'number' => '5123456789012346',
+                'expiry' => [
+                    'month' => '01',
+                    'year' => '39',
+                ],
+            ],
+        ],
+    ],
+]);
+```
+
+#### Deleting a Token
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::deleteToken('TOKEN_ID');
+```
+
+#### Retrieving a Token
+
+```php
+use Souidev\MastercardGateway\Facades\MastercardGateway;
+
+$response = MastercardGateway::retrieveToken('TOKEN_ID');
 ```
 
 ## Testing

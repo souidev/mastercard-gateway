@@ -7,10 +7,10 @@ use Souidev\MastercardGateway\Exceptions\MastercardApiException;
 
 class Parser
 {
-    public function formatRequest(array $data, Merchant $merchant): array
+    public function formatRequest(string $apiOperation, array $data, Merchant $merchant): array
     {
         return array_merge_recursive([
-            'apiOperation' => 'PAY',
+            'apiOperation' => $apiOperation,
             'merchant' => $merchant->getMerchantId(),
         ], $data);
     }

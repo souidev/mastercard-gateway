@@ -48,4 +48,26 @@ class Connection
             throw new MastercardConnectionException('Error connecting to Mastercard Gateway: '.$e->getMessage(), $e->getCode(), $e);
         }
     }
+
+    public function get(string $url): array
+    {
+        try {
+            $response = $this->client->get($url);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            throw new MastercardConnectionException('Error connecting to Mastercard Gateway: '.$e->getMessage(), $e->getCode(), $e);
+        }
+    }
+
+    public function delete(string $url): array
+    {
+        try {
+            $response = $this->client->delete($url);
+
+            return json_decode($response->getBody()->getContents(), true);
+        } catch (RequestException $e) {
+            throw new MastercardConnectionException('Error connecting to Mastercard Gateway: '.$e->getMessage(), $e->getCode(), $e);
+        }
+    }
 }

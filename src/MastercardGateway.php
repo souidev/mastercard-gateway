@@ -41,7 +41,6 @@ class MastercardGateway
         return $this->parser->parseResponse($response);
     }
 
-
     public function authorize(array $data): Response
     {
         $apiRequest = $this->parser->formatRequest('AUTHORIZE', $data, $this->merchant);
@@ -96,6 +95,7 @@ class MastercardGateway
 
         return $this->parser->parseResponse($response);
     }
+
     public function retrieveTransaction(string $orderId, string $transactionId): Response
     {
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.$orderId.'/transaction/'.$transactionId;
@@ -124,6 +124,7 @@ class MastercardGateway
 
         return $this->parser->parseResponse($response);
     }
+
     public function createToken(array $data): Response
     {
         $apiRequest = $this->parser->formatRequest('CREATE_TOKEN', $data, $this->merchant);

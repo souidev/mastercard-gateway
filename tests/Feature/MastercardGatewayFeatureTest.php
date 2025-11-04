@@ -14,6 +14,7 @@ class MastercardGatewayFeatureTest extends TestCase
 
         $this->assertInstanceOf(MastercardGateway::class, $mastercardGateway);
     }
+
     /** @test */
     public function it_can_make_a_pay_request()
     {
@@ -43,6 +44,7 @@ class MastercardGatewayFeatureTest extends TestCase
 
         $this->assertEquals('SUCCESS', $response->result);
     }
+
     /** @test */
     public function it_can_make_an_authorize_request()
     {

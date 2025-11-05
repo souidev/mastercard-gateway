@@ -25,7 +25,7 @@ class MastercardGateway
 
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.($data['orderId'] ?? '').'/transaction/'.($data['transactionId'] ?? '');
 
-        $response = $this->connection->post(trim($url, '/'), $apiRequest);
+        $response = $this->connection->put(trim($url, '/'), $apiRequest);
 
         return $this->parser->parseResponse($response);
     }

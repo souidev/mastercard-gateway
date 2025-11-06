@@ -21,9 +21,11 @@ class MastercardGateway
 
     public function pay(array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('PAY', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.($data['orderId'] ?? '').'/transaction/'.($data['transactionId'] ?? '');
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('PAY', $data);
 
         $response = $this->connection->put(trim($url, '/'), $apiRequest);
 
@@ -32,9 +34,12 @@ class MastercardGateway
 
     public function updateTransaction(string $orderId, string $transactionId, array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('UPDATE_TRANSACTION', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.$orderId.'/transaction/'.$transactionId;
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('UPDATE_TRANSACTION', $data);
+
 
         $response = $this->connection->put($url, $apiRequest);
 
@@ -43,9 +48,11 @@ class MastercardGateway
 
     public function authorize(array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('AUTHORIZE', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.($data['orderId'] ?? '').'/transaction/'.($data['transactionId'] ?? '');
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('AUTHORIZE', $data);
 
         $response = $this->connection->put(trim($url, '/'), $apiRequest);
 
@@ -54,9 +61,11 @@ class MastercardGateway
 
     public function capture(string $orderId, string $transactionId, array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('CAPTURE', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.$orderId.'/transaction/'.$transactionId;
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('CAPTURE', $data);
 
         $response = $this->connection->put($url, $apiRequest);
 
@@ -65,9 +74,12 @@ class MastercardGateway
 
     public function refund(string $orderId, string $transactionId, array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('REFUND', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.$orderId.'/transaction/'.$transactionId;
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('REFUND', $data);
+
 
         $response = $this->connection->put($url, $apiRequest);
 
@@ -76,9 +88,11 @@ class MastercardGateway
 
     public function void(string $orderId, string $transactionId, array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('VOID', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.$orderId.'/transaction/'.$transactionId;
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('VOID', $data);
 
         $response = $this->connection->put($url, $apiRequest);
 
@@ -87,9 +101,11 @@ class MastercardGateway
 
     public function verify(array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('VERIFY', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.($data['orderId'] ?? '').'/transaction/'.($data['transactionId'] ?? '');
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('VERIFY', $data);
 
         $response = $this->connection->put(trim($url, '/'), $apiRequest);
 
@@ -116,9 +132,11 @@ class MastercardGateway
 
     public function authenticatePayer(array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('AUTHENTICATE_PAYER', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/order/'.($data['orderId'] ?? '').'/transaction/'.($data['transactionId'] ?? '');
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('AUTHENTICATE_PAYER', $data);
 
         $response = $this->connection->put(trim($url, '/'), $apiRequest);
 
@@ -127,7 +145,7 @@ class MastercardGateway
 
     public function createToken(array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('CREATE_TOKEN', $data, $this->merchant);
+        $apiRequest = $this->parser->formatRequest('CREATE_TOKEN', $data);
 
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/token';
 
@@ -138,9 +156,12 @@ class MastercardGateway
 
     public function updateToken(string $tokenId, array $data): Response
     {
-        $apiRequest = $this->parser->formatRequest('UPDATE_TOKEN', $data, $this->merchant);
-
         $url = '/version/'.$this->merchant->getApiVersion().'/merchant/'.$this->merchant->getMerchantId().'/token/'.$tokenId;
+
+        unset($data['orderId'], $data['transactionId']);
+
+        $apiRequest = $this->parser->formatRequest('UPDATE_TOKEN', $data);
+
 
         $response = $this->connection->put($url, $apiRequest);
 

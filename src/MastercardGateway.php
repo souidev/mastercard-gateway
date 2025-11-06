@@ -40,7 +40,6 @@ class MastercardGateway
 
         $apiRequest = $this->parser->formatRequest('UPDATE_TRANSACTION', $data);
 
-
         $response = $this->connection->put($url, $apiRequest);
 
         return $this->parser->parseResponse($response);
@@ -79,7 +78,6 @@ class MastercardGateway
         unset($data['orderId'], $data['transactionId']);
 
         $apiRequest = $this->parser->formatRequest('REFUND', $data);
-
 
         $response = $this->connection->put($url, $apiRequest);
 
@@ -161,7 +159,6 @@ class MastercardGateway
         unset($data['orderId'], $data['transactionId']);
 
         $apiRequest = $this->parser->formatRequest('UPDATE_TOKEN', $data);
-
 
         $response = $this->connection->put($url, $apiRequest);
 

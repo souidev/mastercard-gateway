@@ -15,7 +15,8 @@ class Connection
     public function __construct(array $config)
     {
         $this->config = $config;
-        $this->client = new Client([
+
+        $guzzleOptions = [
             'base_uri' => $this->config['gateway_url'],
             'auth' => [
                 'merchant.'.$this->config['merchant_id'],
@@ -24,7 +25,30 @@ class Connection
             'debug' => $this->config['debug'] ?? false,
             'proxy' => $this->config['proxy']['server'] ?? null,
             'verify' => $this->config['certificate']['path'] ?? true,
-        ]);
+        ];
+
+        if (!empty($this->config['ssl']['cert'])) {
+            $certPath = base_path($this->config['ssl']['cert']);
+            if (file_exists($certPath)) {
+                $guzzleOptions['cert'] = $certPath;
+            }
+        }
+
+        if (!empty($this->config['ssl']['key'])) {
+            $keyPath = base_path($this->config['ssl']['key']);
+            if (file_exists($keyPath)) {
+                $guzzleOptions['ssl_key'] = $keyPath;
+            }
+        }
+
+        if (!empty($this->config['ssl']['ca'])) {
+            $caPath = base_path($this->config['ssl']['ca']);
+            if (file_exists($caPath)) {
+                $guzzleOptions['verify'] = $caPath;
+            }
+        }
+
+        $this->client = new Client($guzzleOptions);
     }
 
     public function post(string $url, array $data): array

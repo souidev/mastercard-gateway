@@ -27,21 +27,21 @@ class Connection
             'verify' => $this->config['certificate']['path'] ?? true,
         ];
 
-        if (!empty($this->config['ssl']['cert'])) {
+        if (! empty($this->config['ssl']['cert'])) {
             $certPath = base_path($this->config['ssl']['cert']);
             if (file_exists($certPath)) {
                 $guzzleOptions['cert'] = $certPath;
             }
         }
 
-        if (!empty($this->config['ssl']['key'])) {
+        if (! empty($this->config['ssl']['key'])) {
             $keyPath = base_path($this->config['ssl']['key']);
             if (file_exists($keyPath)) {
                 $guzzleOptions['ssl_key'] = $keyPath;
             }
         }
 
-        if (!empty($this->config['ssl']['ca'])) {
+        if (! empty($this->config['ssl']['ca'])) {
             $caPath = base_path($this->config['ssl']['ca']);
             if (file_exists($caPath)) {
                 $guzzleOptions['verify'] = $caPath;

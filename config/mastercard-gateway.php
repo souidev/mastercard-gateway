@@ -11,14 +11,7 @@ return [
         'server' => env('MASTERCARD_PROXY_SERVER'),
         'auth' => env('MASTERCARD_PROXY_AUTH'),
     ],
-    'certificate' => [
-        'path' => env('MASTERCARD_CERTIFICATE_PATH'),
-        'verify_peer' => env('MASTERCARD_VERIFY_PEER', true),
-        'verify_host' => env('MASTERCARD_VERIFY_HOST', 2),
-    ],
     'ssl' => [
-        'cert' => env('MASTERCARD_SSL_CERT_PATH'),
-        'key' => env('MASTERCARD_SSL_KEY_PATH'),
         'ca' => env('MASTERCARD_SSL_CA_PATH'),
     ],
 ];

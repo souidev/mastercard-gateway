@@ -27,7 +27,7 @@ class Connection
             'verify' => true,
         ];
 
-        if (!empty($this->config['ssl']['ca'])) {
+        if (! empty($this->config['ssl']['ca'])) {
             $caPath = base_path($this->config['ssl']['ca']);
             if (file_exists($caPath)) {
                 $guzzleOptions['verify'] = $caPath;
